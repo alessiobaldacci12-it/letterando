@@ -1,0 +1,231 @@
+:root {
+  --bg-color: #0b132b;
+  --card-bg: #1c2541;
+  --text-main: #ffffff;
+  --text-muted: #94a3b8;
+  --border-color: rgba(255, 255, 255, 0.08);
+  
+  --color-unwordle: #10b981;
+  --color-pipipopo: #f59e0b;
+  --color-parola: #8b5cf6;
+  --color-stato: #3b82f6;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Outfit', system-ui, -apple-system, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 32px 16px;
+}
+
+.page-container {
+  width: 100%;
+  max-width: 1020px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+}
+
+/* Header & Logo */
+.main-header {
+  text-align: center;
+}
+
+.main-logo {
+  max-width: 380px;
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.4));
+  transition: transform 0.3s ease;
+}
+
+.main-logo:hover {
+  transform: scale(1.03);
+}
+
+/* Layout Griglia 3 + 1 */
+.games-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  width: 100%;
+}
+
+/* Posiziona il 4° gioco al centro della seconda riga */
+.card-stato {
+  grid-column: 2;
+}
+
+/* Styling Card */
+.game-card {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
+              box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 0.3s ease;
+}
+
+.card-banner {
+  height: 130px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.02);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.card-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 58px;
+  height: 58px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(8px);
+  transition: transform 0.3s ease;
+}
+
+.poop-emoji {
+  font-size: 2.2rem;
+  line-height: 1;
+}
+
+.badge {
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-muted);
+}
+
+.card-content {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.card-content h2 {
+  font-size: 1.35rem;
+  font-weight: 800;
+}
+
+.card-content p {
+  color: var(--text-muted);
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+.play-btn {
+  font-size: 0.9rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 6px;
+  transition: gap 0.2s ease;
+}
+
+/* Colori specifici per Gioco */
+.card-unwordle .card-icon { color: var(--color-unwordle); }
+.card-unwordle .play-btn { color: var(--color-unwordle); }
+
+.card-pipipopo .play-btn { color: var(--color-pipipopo); }
+
+.card-parola .card-icon { color: var(--color-parola); }
+.card-parola .play-btn { color: var(--color-parola); }
+
+.card-stato .card-icon { color: var(--color-stato); }
+.card-stato .play-btn { color: var(--color-stato); }
+
+/* Effetti Hover */
+.game-card:hover {
+  transform: translateY(-8px);
+}
+
+.game-card:hover .card-icon {
+  transform: scale(1.1) rotate(-4deg);
+}
+
+.game-card:hover .play-btn {
+  gap: 10px;
+}
+
+.card-unwordle:hover {
+  border-color: var(--color-unwordle);
+  box-shadow: 0 12px 30px -10px rgba(16, 185, 129, 0.35);
+}
+
+.card-pipipopo:hover {
+  border-color: var(--color-pipipopo);
+  box-shadow: 0 12px 30px -10px rgba(245, 158, 11, 0.35);
+}
+
+.card-parola:hover {
+  border-color: var(--color-parola);
+  box-shadow: 0 12px 30px -10px rgba(139, 92, 246, 0.35);
+}
+
+.card-stato:hover {
+  border-color: var(--color-stato);
+  box-shadow: 0 12px 30px -10px rgba(59, 130, 246, 0.35);
+}
+
+/* Footer */
+.main-footer {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  border-top: 1px solid var(--border-color);
+  padding-top: 24px;
+  width: 100%;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .games-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .card-stato {
+    grid-column: span 2;
+    justify-self: center;
+    width: 100%;
+    max-width: 450px;
+  }
+}
+
+@media (max-width: 600px) {
+  .games-grid {
+    grid-template-columns: 1fr;
+  }
+  .card-stato {
+    grid-column: auto;
+    max-width: 100%;
+  }
+  .main-logo {
+    max-width: 280px;
+  }
+}
