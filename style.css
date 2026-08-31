@@ -1,14 +1,16 @@
 :root {
-  --bg-color: #0b132b;
-  --card-bg: #1c2541;
-  --text-main: #ffffff;
-  --text-muted: #94a3b8;
-  --border-color: rgba(255, 255, 255, 0.08);
+  --bg-color: #f7f2e9;
+  --card-bg: #ffffff;
+  --text-dark: #1e293b;
+  --text-serif: #1c3144;
+  --text-muted: #64748b;
+  --border-color: #ebdcd0;
   
-  --color-unwordle: #10b981;
-  --color-pipipopo: #f59e0b;
-  --color-parola: #8b5cf6;
-  --color-stato: #3b82f6;
+  --color-unwordle: #059669;
+  --color-pipipopo: #d97706;
+  --color-parola: #7c3aed;
+  --color-stato: #2563eb;
+  --color-coffee: #e05305;
 }
 
 * {
@@ -20,12 +22,19 @@
 body {
   font-family: 'Outfit', system-ui, -apple-system, sans-serif;
   background-color: var(--bg-color);
-  color: var(--text-main);
+  background-image: 
+    linear-gradient(to right, rgba(175, 190, 205, 0.22) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(175, 190, 205, 0.22) 1px, transparent 1px),
+    radial-gradient(circle at 12% 18%, rgba(245, 185, 140, 0.25) 0%, transparent 42%),
+    radial-gradient(circle at 88% 15%, rgba(145, 200, 240, 0.25) 0%, transparent 45%);
+  background-size: 32px 32px, 32px 32px, 100% 100%, 100% 100%;
+  background-attachment: fixed;
+  color: var(--text-dark);
   min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 32px 16px;
+  padding: 24px 16px;
 }
 
 .page-container {
@@ -34,27 +43,63 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 40px;
+  gap: 32px;
 }
 
-/* Header & Logo */
+/* Top Bar */
+.top-bar {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.coffee-btn {
+  background: #ffffff;
+  color: var(--color-coffee);
+  border: 2px solid #fcd3c1;
+  padding: 8px 18px;
+  border-radius: 30px;
+  font-family: inherit;
+  font-size: 0.92rem;
+  font-weight: 800;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 12px rgba(224, 83, 5, 0.08);
+  transition: all 0.25s ease;
+}
+
+.coffee-btn:hover {
+  background: var(--color-coffee);
+  color: #ffffff;
+  border-color: var(--color-coffee);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(224, 83, 5, 0.22);
+}
+
+/* Header & Banner Ingrandito */
 .main-header {
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
 }
 
 .main-logo {
-  max-width: 380px;
+  max-width: 580px;
   width: 100%;
   height: auto;
-  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.4));
+  filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.07));
   transition: transform 0.3s ease;
 }
 
 .main-logo:hover {
-  transform: scale(1.03);
+  transform: scale(1.02);
 }
 
-/* Layout Griglia 3 + 1 */
+/* Griglia Giochi */
 .games-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -62,75 +107,72 @@ body {
   width: 100%;
 }
 
-/* Posiziona il 4° gioco al centro della seconda riga */
 .card-stato {
   grid-column: 2;
 }
 
-/* Styling Card */
 .game-card {
   background-color: var(--card-bg);
   border: 1px solid var(--border-color);
-  border-radius: 20px;
+  border-radius: 22px;
   overflow: hidden;
   text-decoration: none;
   color: inherit;
   display: flex;
   flex-direction: column;
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
-              box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-              border-color 0.3s ease;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0, 0, 0, 0.02);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
 }
 
 .card-banner {
-  height: 130px;
+  height: 110px;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  padding: 20px;
-  background: rgba(255, 255, 255, 0.02);
-  border-bottom: 1px solid var(--border-color);
+  padding: 18px;
+  background: linear-gradient(180deg, #fcf8f2 0%, #ffffff 100%);
+  border-bottom: 1px solid #f2e9df;
 }
 
 .card-icon {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 58px;
-  height: 58px;
+  width: 54px;
+  height: 54px;
   border-radius: 16px;
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(8px);
-  transition: transform 0.3s ease;
+  background: #ffffff;
+  border: 1px solid #ebdcd0;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
 }
 
 .poop-emoji {
-  font-size: 2.2rem;
-  line-height: 1;
+  font-size: 2.1rem;
 }
 
 .badge {
   font-size: 0.68rem;
   font-weight: 800;
-  letter-spacing: 1px;
+  letter-spacing: 0.8px;
   padding: 6px 12px;
   border-radius: 20px;
-  background: rgba(255, 255, 255, 0.08);
-  color: var(--text-muted);
+  background: #f0e6da;
+  color: #5c4e40;
 }
 
 .card-content {
-  padding: 24px;
+  padding: 22px;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
   justify-content: space-between;
-  gap: 14px;
+  gap: 12px;
 }
 
 .card-content h2 {
   font-size: 1.35rem;
   font-weight: 800;
+  color: var(--text-dark);
 }
 
 .card-content p {
@@ -140,16 +182,16 @@ body {
 }
 
 .play-btn {
-  font-size: 0.9rem;
-  font-weight: 700;
+  font-size: 0.92rem;
+  font-weight: 800;
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  margin-top: 6px;
+  margin-top: 4px;
   transition: gap 0.2s ease;
 }
 
-/* Colori specifici per Gioco */
+/* Colori specifici giochi */
 .card-unwordle .card-icon { color: var(--color-unwordle); }
 .card-unwordle .play-btn { color: var(--color-unwordle); }
 
@@ -161,47 +203,174 @@ body {
 .card-stato .card-icon { color: var(--color-stato); }
 .card-stato .play-btn { color: var(--color-stato); }
 
-/* Effetti Hover */
+/* Hover Card */
 .game-card:hover {
-  transform: translateY(-8px);
-}
-
-.game-card:hover .card-icon {
-  transform: scale(1.1) rotate(-4deg);
+  transform: translateY(-6px);
+  box-shadow: 0 16px 30px -8px rgba(0, 0, 0, 0.1);
 }
 
 .game-card:hover .play-btn {
   gap: 10px;
 }
 
-.card-unwordle:hover {
-  border-color: var(--color-unwordle);
-  box-shadow: 0 12px 30px -10px rgba(16, 185, 129, 0.35);
+/* Statistiche Visitatori */
+.stats-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 36px;
+  background: #ffffff;
+  padding: 16px 40px;
+  border-radius: 40px;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.04);
 }
 
-.card-pipipopo:hover {
-  border-color: var(--color-pipipopo);
-  box-shadow: 0 12px 30px -10px rgba(245, 158, 11, 0.35);
+.stat-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.card-parola:hover {
-  border-color: var(--color-parola);
-  box-shadow: 0 12px 30px -10px rgba(139, 92, 246, 0.35);
+.stat-number {
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: var(--text-dark);
 }
 
-.card-stato:hover {
-  border-color: var(--color-stato);
-  box-shadow: 0 12px 30px -10px rgba(59, 130, 246, 0.35);
+.stat-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
-/* Footer */
+.stat-divider {
+  width: 1px;
+  height: 28px;
+  background: var(--border-color);
+}
+
+/* Footer Aggiornato */
 .main-footer {
   text-align: center;
   color: var(--text-muted);
-  font-size: 0.85rem;
+  font-size: 0.88rem;
   border-top: 1px solid var(--border-color);
   padding-top: 24px;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.footer-contact {
+  font-size: 0.85rem;
+}
+
+.footer-contact a {
+  color: var(--color-stato);
+  text-decoration: underline;
+  font-weight: 700;
+  transition: color 0.2s ease;
+}
+
+.footer-contact a:hover {
+  color: #1d4ed8;
+}
+
+/* Modal PayPal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(30, 41, 59, 0.45);
+  backdrop-filter: blur(6px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 1000;
+  padding: 16px;
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-card {
+  background: #ffffff;
+  padding: 32px;
+  border-radius: 28px;
+  max-width: 440px;
+  width: 100%;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+  transform: translateY(20px);
+  transition: transform 0.3s ease;
+}
+
+.modal-overlay.active .modal-card {
+  transform: translateY(0);
+}
+
+.modal-close {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  background: transparent;
+  border: none;
+  font-size: 1.8rem;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.modal-icon {
+  font-size: 3rem;
+  margin-bottom: 8px;
+}
+
+.modal-card h3 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--text-dark);
+  margin-bottom: 12px;
+}
+
+.modal-text {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--text-muted);
+  margin-bottom: 24px;
+}
+
+.paypal-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: #0070ba;
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 800;
+  padding: 14px 24px;
+  border-radius: 30px;
+  width: 100%;
+  box-shadow: 0 8px 20px rgba(0, 112, 186, 0.25);
+  transition: all 0.25s ease;
+}
+
+.paypal-btn:hover {
+  background: #005ea6;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(0, 112, 186, 0.35);
 }
 
 /* Responsive */
@@ -226,6 +395,6 @@ body {
     max-width: 100%;
   }
   .main-logo {
-    max-width: 280px;
+    max-width: 360px;
   }
 }
