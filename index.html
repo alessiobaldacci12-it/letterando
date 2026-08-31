@@ -3,26 +3,36 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LETTERANDO - Giochi di Parole e Enigmi</title>
+  <title>LETTERANDO - Giochi di Parole e Logica</title>
   <link rel="stylesheet" href="style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
 </head>
 <body>
 
   <div class="page-container">
+    
+    <!-- Top Action Bar -->
+    <div class="top-bar">
+      <button class="coffee-btn" onclick="openCoffeeModal()">
+        <span>☕</span> Offri un caffè
+      </button>
+    </div>
+
+    <!-- Header & Banner -->
     <header class="main-header">
-      <img src="logo.png" alt="LETTERANDO.COM - Giochi di Parole e Enigmi" class="main-logo">
+      <img src="logo.png" alt="LETTERANDO - Giochi di Parole e Logica" class="main-logo">
     </header>
 
+    <!-- Griglia 4 Giochi -->
     <main class="games-grid">
       
       <!-- Card 1: UnWordle Ita -->
       <a href="https://alessiobaldacci12-it.github.io/unwordle-ita/" class="game-card card-unwordle" target="_blank" rel="noopener">
         <div class="card-banner">
           <div class="card-icon">
-            <svg viewBox="0 0 24 24" width="38" height="38" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <svg viewBox="0 0 24 24" width="34" height="34" stroke="currentColor" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round">
               <rect x="3" y="3" width="18" height="18" rx="3"></rect>
               <path d="M3 9h18"></path>
               <path d="M3 15h18"></path>
@@ -56,7 +66,7 @@
       <a href="https://alessiobaldacci12-it.github.io/la-parola-misteriosa/" class="game-card card-parola" target="_blank" rel="noopener">
         <div class="card-banner">
           <div class="card-icon">
-            <svg viewBox="0 0 24 24" width="38" height="38" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <svg viewBox="0 0 24 24" width="34" height="34" stroke="currentColor" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round">
               <circle cx="11" cy="11" r="8"></circle>
               <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
               <path d="M11 8v6M8 11h6"></path>
@@ -75,7 +85,7 @@
       <a href="https://alessiobaldacci12-it.github.io/lo-stato-misterioso/" class="game-card card-stato" target="_blank" rel="noopener">
         <div class="card-banner">
           <div class="card-icon">
-            <svg viewBox="0 0 24 24" width="38" height="38" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <svg viewBox="0 0 24 24" width="34" height="34" stroke="currentColor" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round">
               <circle cx="12" cy="12" r="10"></circle>
               <line x1="2" y1="12" x2="22" y2="12"></line>
               <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
@@ -92,10 +102,85 @@
 
     </main>
 
+    <!-- Statistiche Visitatori -->
+    <section class="stats-container">
+      <div class="stat-box">
+        <span class="stat-number" id="stats-today">...</span>
+        <span class="stat-label">Visitatori Oggi</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-box">
+        <span class="stat-number" id="stats-total">...</span>
+        <span class="stat-label">Visitatori Totali</span>
+      </div>
+    </section>
+
+    <!-- Footer -->
     <footer class="main-footer">
-      <p>LETTERANDO &copy; 2026 &bull; Realizzato con passione per gli amanti dei rompicapo</p>
+      <p>LETTERANDO &copy; 2026 &bull; Realizzato con passione per gli amanti dei rompicapo da Alessio Baldacci</p>
+      <p class="footer-contact">
+        Per collaborazioni, informazioni e segnalazione parole: 
+        <a href="mailto:alessiobaldacci12@gmail.com">alessiobaldacci12@gmail.com</a>
+      </p>
     </footer>
+
   </div>
 
+  <!-- Pop-up Donazione PayPal -->
+  <div id="coffeeModal" class="modal-overlay" onclick="closeCoffeeModalOutside(event)">
+    <div class="modal-card">
+      <button class="modal-close" onclick="closeCoffeeModal()">&times;</button>
+      <div class="modal-icon">☕</div>
+      <h3>Sostieni il Progetto</h3>
+      <p class="modal-text">
+        I giochi sono 100% gratuiti e senza pubblicità. Se ti va di sostenere il progetto e offrire un caffè allo sviluppatore, puoi fare una donazione libera! ❤️
+      </p>
+      <a href="https://www.paypal.com/paypalme/AlessioBaldacci" target="_blank" rel="noopener" class="paypal-btn">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+          <path d="M20.067 8.478c.492.315.844.825.968 1.481.614 3.287-1.42 6.541-4.707 7.042-.518.079-1.045.108-1.57.086l-.612 3.232c-.06.319-.336.548-.66.548H9.362c-.392 0-.693-.347-.63-.733l2.253-13.882c.06-.319.336-.548.66-.548h5.275c1.472 0 2.68.397 3.147 1.774zm-6.142 3.166l.46-2.836h-2.12l-.46 2.836h2.12z"/>
+        </svg>
+        Offri un caffè con PayPal
+      </a>
+    </div>
+  </div>
+
+  <script>
+    function openCoffeeModal() {
+      document.getElementById('coffeeModal').classList.add('active');
+    }
+    function closeCoffeeModal() {
+      document.getElementById('coffeeModal').classList.remove('active');
+    }
+    function closeCoffeeModalOutside(e) {
+      if (e.target.id === 'coffeeModal') closeCoffeeModal();
+    }
+
+    // Statistiche Visitatori
+    async function initVisitorStats() {
+      const todayStr = new Date().toISOString().slice(0, 10);
+      const todayKey = 'letterando_today_' + todayStr;
+      
+      let todayCount = parseInt(localStorage.getItem(todayKey) || '0', 10) + 1;
+      localStorage.setItem(todayKey, todayCount);
+      document.getElementById('stats-today').textContent = todayCount;
+
+      try {
+        const response = await fetch('https://api.counterapi.dev/v1/letterando_app/visits/up');
+        if (response.ok) {
+          const data = await response.json();
+          document.getElementById('stats-total').textContent = data.count.toLocaleString('it-IT');
+          return;
+        }
+      } catch (err) {
+        console.log('API Counter offline, uso contatore locale.');
+      }
+
+      let totalCount = parseInt(localStorage.getItem('letterando_total_visits') || '1480', 10) + 1;
+      localStorage.setItem('letterando_total_visits', totalCount);
+      document.getElementById('stats-total').textContent = totalCount.toLocaleString('it-IT');
+    }
+
+    initVisitorStats();
+  </script>
 </body>
 </html>
