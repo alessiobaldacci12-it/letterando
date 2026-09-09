@@ -1,193 +1,121 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LETTERANDO - Giochi di Parole e Logica</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARRIVA ALLA PIPI O ALLA POPO 💩 - Il gioco delle parole</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <div class="page-container">
-    
-    <div class="top-bar">
-      <button class="coffee-btn" onclick="openCoffeeModal()">
-        <span>☕</span> Offri un caffè
-      </button>
+    <!-- Pop-up Regole del Gioco -->
+    <div id="rules-modal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Come si gioca? 🎯</h2>
+            </div>
+            <p class="modal-subtitle">Trova la catena di parole per raggiungere l'obiettivo!</p>
+            <ul class="rules-list">
+                <li>
+                    <span class="rule-icon">🔤</span>
+                    <span>Ad ogni mossa inserisci una parola valida di <strong>4 lettere</strong>.</span>
+                </li>
+                <li>
+                    <span class="rule-icon">✏️</span>
+                    <span>Puoi cambiare <strong>1 sola lettera</strong> rispetto alla parola precedente.</span>
+                </li>
+                <li>
+                    <span class="rule-icon">🟩</span>
+                    <span>Se una lettera è nella <strong>posizione corretta</strong> rispetto all'obiettivo, si colorerà di <strong class="green-text">verde</strong>.</span>
+                </li>
+                <li>
+                    <span class="rule-icon">🏆</span>
+                    <span>Raggiungi l'obiettivo usando il minor numero possibile di parole extra!</span>
+                </li>
+            </ul>
+            <button id="close-modal-btn" class="modal-btn action-btn" onclick="closeModal()">INIZIA A GIOCARE 🚀</button>
+        </div>
     </div>
 
-    <header class="main-header">
-      <img src="logo.png" alt="LETTERANDO - Giochi di Parole e Logica" class="main-logo">
+    <!-- Pop-up Statistiche -->
+    <div id="stats-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <h2>STATISTICHE 📊</h2>
+            <div class="stats-container">
+                <div class="stat-box">
+                    <span id="stat-played">0</span>
+                    <small>Giocate</small>
+                </div>
+                <div class="stat-box">
+                    <span id="stat-win-rate">0%</span>
+                    <small>Vittorie</small>
+                </div>
+                <div class="stat-box">
+                    <span id="stat-streak">0</span>
+                    <small>Streak</small>
+                </div>
+                <div class="stat-box">
+                    <span id="stat-max-streak">0</span>
+                    <small>Max Streak</small>
+                </div>
+            </div>
+
+            <h3>PAROLE IN PIÙ RISPETTO AL MINIMO</h3>
+            <div id="guess-distribution" class="distribution-container">
+                <!-- Generato via JS -->
+            </div>
+
+            <button class="modal-btn secondary-btn" onclick="closeStatsModal()">CHIUDI</button>
+        </div>
+    </div>
+
+    <header>
+        <div class="header-top">
+            <h1>PIPI / POPO 💩</h1>
+            <div class="header-actions">
+                <button class="icon-btn" onclick="openStatsModal()" title="Statistiche">📊</button>
+                <a href="https://paypal.me/AlessioBaldacci" target="_blank" rel="noopener noreferrer" class="icon-btn paypal-btn" title="Offri un caffè con PayPal ☕">☕</a>
+            </div>
+        </div>
+        
+        <!-- Selettore Tipo di Gioco -->
+        <div class="type-selector">
+            <button id="btn-daily" class="type-btn active" onclick="switchGameType('DAILY')">📅 Giornaliera</button>
+            <button id="btn-infinite" class="type-btn" onclick="switchGameType('INFINITE')">♾️ Infinita</button>
+        </div>
+
+        <!-- Selettore Obiettivo -->
+        <div class="mode-selector">
+            <button id="btn-pipi" class="mode-btn active" onclick="switchTarget('PIPI')">Obiettivo PIPI</button>
+            <button id="btn-popo" class="mode-btn" onclick="switchTarget('POPO')">Obiettivo POPO</button>
+        </div>
     </header>
 
-    <main class="games-grid">
-      
-      <a href="https://alessiobaldacci12-it.github.io/unwordle-ita/" class="game-card card-unwordle" target="_blank" rel="noopener">
-        <div class="card-banner">
-          <div class="card-icon">
-            <svg viewBox="0 0 24 24" width="34" height="34" stroke="currentColor" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="3" y="3" width="18" height="18" rx="3"></rect>
-              <path d="M3 9h18"></path>
-              <path d="M3 15h18"></path>
-              <path d="M9 3v18"></path>
-              <path d="M15 3v18"></path>
-            </svg>
-          </div>
-          <span class="badge">LOGICA INVERSA</span>
+    <main class="game-container">
+        <div class="info-board">
+            <p>Partenza: <strong id="start-word">----</strong></p>
+            <p>Obiettivo: <strong id="target-word">PIPI</strong></p>
+            <p>Mosse minime: <span id="min-moves">?</span></p>
         </div>
-        <div class="card-content">
-          <h2>UnWordle Ita</h2>
-          <p>Ricostruisci la griglia al contrario partendo dalla soluzione finale.</p>
-          <span class="play-btn">Gioca ora &rarr;</span>
-        </div>
-      </a>
 
-      <a href="https://alessiobaldacci12-it.github.io/pipi-popo-ita/" class="game-card card-pipipopo" target="_blank" rel="noopener">
-        <div class="card-banner">
-          <div class="card-icon poop-emoji">💩</div>
-          <span class="badge">CATENA DI PAROLE</span>
+        <div id="chain-board" class="chain-board">
+            <!-- Griglia di gioco -->
         </div>
-        <div class="card-content">
-          <h2>Pipi / Popo</h2>
-          <p>Passa da una parola all'altra cambiando una sola lettera alla volta.</p>
-          <span class="play-btn">Gioca ora &rarr;</span>
-        </div>
-      </a>
 
-      <a href="https://alessiobaldacci12-it.github.io/la-parola-misteriosa/" class="game-card card-parola" target="_blank" rel="noopener">
-        <div class="card-banner">
-          <div class="card-icon">
-            <svg viewBox="0 0 24 24" width="34" height="34" stroke="currentColor" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="11" cy="11" r="8"></circle>
-              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-              <path d="M11 8v6M8 11h6"></path>
-            </svg>
-          </div>
-          <span class="badge">CLASSICO</span>
+        <div class="input-area">
+            <input type="text" id="word-input" maxlength="4" placeholder="SCRIVI..." autocomplete="off">
+            <button id="submit-btn" onclick="submitWord()">INVIA</button>
         </div>
-        <div class="card-content">
-          <h2>La Parola Misteriosa</h2>
-          <p>Indovina la parola segreta in 6 tentativi con l'aiuto dei colori.</p>
-          <span class="play-btn">Gioca ora &rarr;</span>
-        </div>
-      </a>
 
-      <a href="https://alessiobaldacci12-it.github.io/lo-stato-misterioso/" class="game-card card-stato" target="_blank" rel="noopener">
-        <div class="card-banner">
-          <div class="card-icon">
-            <svg viewBox="0 0 24 24" width="34" height="34" stroke="currentColor" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="10"></circle>
-              <line x1="2" y1="12" x2="22" y2="12"></line>
-              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
-            </svg>
-          </div>
-          <span class="badge">GEOGRAFIA</span>
+        <div class="action-controls">
+            <button id="surrender-btn" class="surrender-btn" onclick="surrenderGame()">🏳️ MI ARRENDO</button>
+            <button id="next-btn" class="next-btn hidden" onclick="initGame()">NUOVA PARTITA 🔄</button>
         </div>
-        <div class="card-content">
-          <h2>Lo Stato Misterioso</h2>
-          <p>Metti alla prova le tue conoscenze geografiche e indovina lo Stato ONU.</p>
-          <span class="play-btn">Gioca ora &rarr;</span>
-        </div>
-      </a>
 
-      <a href="https://alessiobaldacci12-it.github.io/la-provincia-misteriosa/" class="game-card card-provincia" target="_blank" rel="noopener">
-        <div class="card-banner">
-          <div class="card-icon">
-            <svg viewBox="0 0 24 24" width="34" height="34" stroke="currentColor" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-              <circle cx="12" cy="10" r="3"></circle>
-            </svg>
-          </div>
-          <span class="badge">GEOGRAFIA</span>
-        </div>
-        <div class="card-content">
-          <h2>La Provincia Misteriosa</h2>
-          <p>Metti alla prova le tue conoscenze geografiche e indovina la provincia italiana.</p>
-          <span class="play-btn">Gioca ora &rarr;</span>
-        </div>
-      </a>
-
+        <p id="message-area" class="message-area"></p>
     </main>
 
-    <section class="stats-container">
-      <div class="stat-box">
-        <span class="stat-number" id="stats-today">...</span>
-        <span class="stat-label">Visitatori Oggi</span>
-      </div>
-      <div class="stat-divider"></div>
-      <div class="stat-box">
-        <span class="stat-number" id="stats-total">...</span>
-        <span class="stat-label">Visitatori Totali</span>
-      </div>
-    </section>
-
-    <footer class="main-footer">
-      <p>LETTERANDO &copy; 2026 &bull; Realizzato con passione per gli amanti dei rompicapo da Alessio Baldacci</p>
-      <p class="footer-contact">
-        Per collaborazioni, informazioni e segnalazione parole: 
-        <a href="mailto:alessiobaldacci12@gmail.com">alessiobaldacci12@gmail.com</a>
-      </p>
-    </footer>
-
-  </div>
-
-  <div id="coffeeModal" class="modal-overlay" onclick="closeCoffeeModalOutside(event)">
-    <div class="modal-card">
-      <button class="modal-close" onclick="closeCoffeeModal()">&times;</button>
-      <div class="modal-icon">☕</div>
-      <h3>Sostieni il Progetto</h3>
-      <p class="modal-text">
-        I giochi sono 100% gratuiti e senza pubblicità. Se ti va di sostenere il progetto e offrire un caffè allo sviluppatore, puoi fare una donazione libera! ❤️
-      </p>
-      <a href="https://www.paypal.com/paypalme/AlessioBaldacci" target="_blank" rel="noopener" class="paypal-btn">
-        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
-          <path d="M20.067 8.478c.492.315.844.825.968 1.481.614 3.287-1.42 6.541-4.707 7.042-.518.079-1.045.108-1.57.086l-.612 3.232c-.06.319-.336.548-.66.548H9.362c-.392 0-.693-.347-.63-.733l2.253-13.882c.06-.319.336-.548.66-.548h5.275c1.472 0 2.68.397 3.147 1.774zm-6.142 3.166l.46-2.836h-2.12l-.46 2.836h2.12z"/>
-        </svg>
-        Offri un caffè con PayPal
-      </a>
-    </div>
-  </div>
-
-  <script>
-    function openCoffeeModal() {
-      document.getElementById('coffeeModal').classList.add('active');
-    }
-    function closeCoffeeModal() {
-      document.getElementById('coffeeModal').classList.remove('active');
-    }
-    function closeCoffeeModalOutside(e) {
-      if (e.target.id === 'coffeeModal') closeCoffeeModal();
-    }
-
-    // Statistiche Visitatori
-    async function initVisitorStats() {
-      const todayStr = new Date().toISOString().slice(0, 10);
-      const todayKey = 'letterando_today_' + todayStr;
-      
-      let todayCount = parseInt(localStorage.getItem(todayKey) || '0', 10) + 1;
-      localStorage.setItem(todayKey, todayCount);
-      document.getElementById('stats-today').textContent = todayCount;
-
-      try {
-        const response = await fetch('https://api.counterapi.dev/v1/letterando_app/visits/up');
-        if (response.ok) {
-          const data = await response.json();
-          document.getElementById('stats-total').textContent = data.count.toLocaleString('it-IT');
-          return;
-        }
-      } catch (err) {
-        console.log('API Counter offline, uso contatore locale.');
-      }
-
-      let totalCount = parseInt(localStorage.getItem('letterando_total_visits') || '1480', 10) + 1;
-      localStorage.setItem('letterando_total_visits', totalCount);
-      document.getElementById('stats-total').textContent = totalCount.toLocaleString('it-IT');
-    }
-
-    initVisitorStats();
-  </script>
+    <script src="dizionario.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
