@@ -13,18 +13,22 @@
 
   <div class="page-container">
     
+    <!-- Top Action Bar -->
     <div class="top-bar">
       <button class="coffee-btn" onclick="openCoffeeModal()">
         <span>☕</span> Offri un caffè
       </button>
     </div>
 
+    <!-- Header & Banner -->
     <header class="main-header">
       <img src="logo.png" alt="LETTERANDO - Giochi di Parole e Logica" class="main-logo">
     </header>
 
+    <!-- Griglia 4 Giochi -->
     <main class="games-grid">
       
+      <!-- Card 1: UnWordle Ita -->
       <a href="https://alessiobaldacci12-it.github.io/unwordle-ita/" class="game-card card-unwordle" target="_blank" rel="noopener">
         <div class="card-banner">
           <div class="card-icon">
@@ -45,6 +49,7 @@
         </div>
       </a>
 
+      <!-- Card 2: Pipi/Popo -->
       <a href="https://alessiobaldacci12-it.github.io/pipi-popo-ita/" class="game-card card-pipipopo" target="_blank" rel="noopener">
         <div class="card-banner">
           <div class="card-icon poop-emoji">💩</div>
@@ -52,11 +57,12 @@
         </div>
         <div class="card-content">
           <h2>Pipi / Popo</h2>
-          <p>Passa da una parola all'altra cambiando una sola lettera alla volta.</p>
+          <p>Passa da una parola all'altra cambiando una sola lettera alla volta... arriva a fare la pipì e la popò!</p>
           <span class="play-btn">Gioca ora &rarr;</span>
         </div>
       </a>
 
+      <!-- Card 3: La Parola Misteriosa -->
       <a href="https://alessiobaldacci12-it.github.io/la-parola-misteriosa/" class="game-card card-parola" target="_blank" rel="noopener">
         <div class="card-banner">
           <div class="card-icon">
@@ -70,11 +76,12 @@
         </div>
         <div class="card-content">
           <h2>La Parola Misteriosa</h2>
-          <p>Indovina la parola segreta in 6 tentativi con l'aiuto dei colori.</p>
+          <p>Indovina la parola segreta in 10 tentativi con l'aiuto dei colori.</p>
           <span class="play-btn">Gioca ora &rarr;</span>
         </div>
       </a>
 
+      <!-- Card 4: Lo Stato Misterioso -->
       <a href="https://alessiobaldacci12-it.github.io/lo-stato-misterioso/" class="game-card card-stato" target="_blank" rel="noopener">
         <div class="card-banner">
           <div class="card-icon">
@@ -93,25 +100,9 @@
         </div>
       </a>
 
-      <a href="https://alessiobaldacci12-it.github.io/la-provincia-misteriosa/" class="game-card card-provincia" target="_blank" rel="noopener">
-        <div class="card-banner">
-          <div class="card-icon">
-            <svg viewBox="0 0 24 24" width="34" height="34" stroke="currentColor" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-              <circle cx="12" cy="10" r="3"></circle>
-            </svg>
-          </div>
-          <span class="badge">GEOGRAFIA</span>
-        </div>
-        <div class="card-content">
-          <h2>La Provincia Misteriosa</h2>
-          <p>Metti alla prova le tue conoscenze geografiche e indovina la provincia italiana.</p>
-          <span class="play-btn">Gioca ora &rarr;</span>
-        </div>
-      </a>
-
     </main>
 
+    <!-- Statistiche Visitatori -->
     <section class="stats-container">
       <div class="stat-box">
         <span class="stat-number" id="stats-today">...</span>
@@ -124,6 +115,7 @@
       </div>
     </section>
 
+    <!-- Footer -->
     <footer class="main-footer">
       <p>LETTERANDO &copy; 2026 &bull; Realizzato con passione per gli amanti dei rompicapo da Alessio Baldacci</p>
       <p class="footer-contact">
@@ -134,6 +126,7 @@
 
   </div>
 
+  <!-- Pop-up Donazione PayPal -->
   <div id="coffeeModal" class="modal-overlay" onclick="closeCoffeeModalOutside(event)">
     <div class="modal-card">
       <button class="modal-close" onclick="closeCoffeeModal()">&times;</button>
@@ -162,27 +155,36 @@
       if (e.target.id === 'coffeeModal') closeCoffeeModal();
     }
 
-    // Statistiche Visitatori
+    // Statistiche Visitatori Corrette
     async function initVisitorStats() {
       const todayStr = new Date().toISOString().slice(0, 10);
-      const todayKey = 'letterando_today_' + todayStr;
+      const lastVisitDate = localStorage.getItem('letterando_last_visit_date');
+      let todayCount = parseInt(localStorage.getItem('letterando_today_visits') || '0', 10);
+
+      // Se è un nuovo giorno, resetta il contatore giornaliero
+      if (lastVisitDate !== todayStr) {
+        todayCount = 1;
+        localStorage.setItem('letterando_last_visit_date', todayStr);
+      } else {
+        todayCount += 1;
+      }
       
-      let todayCount = parseInt(localStorage.getItem(todayKey) || '0', 10) + 1;
-      localStorage.setItem(todayKey, todayCount);
+      localStorage.setItem('letterando_today_visits', todayCount);
       document.getElementById('stats-today').textContent = todayCount;
 
+      // Gestione Visitatori Totali con API Counter affidabile
       try {
-        const response = await fetch('https://api.counterapi.dev/v1/letterando_app/visits/up');
+        const response = await fetch('https://api.hitvisitable.com/v1/letterando-main-site/hit');
         if (response.ok) {
           const data = await response.json();
-          document.getElementById('stats-total').textContent = data.count.toLocaleString('it-IT');
+          document.getElementById('stats-total').textContent = (data.value || data.count).toLocaleString('it-IT');
           return;
         }
       } catch (err) {
-        console.log('API Counter offline, uso contatore locale.');
+        // Fallback locale in caso di assenza di rete
       }
 
-      let totalCount = parseInt(localStorage.getItem('letterando_total_visits') || '1480', 10) + 1;
+      let totalCount = parseInt(localStorage.getItem('letterando_total_visits') || '1500', 10) + 1;
       localStorage.setItem('letterando_total_visits', totalCount);
       document.getElementById('stats-total').textContent = totalCount.toLocaleString('it-IT');
     }

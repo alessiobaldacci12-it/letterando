@@ -10,7 +10,6 @@
   --color-pipipopo: #d97706;
   --color-parola: #7c3aed;
   --color-stato: #2563eb;
-  --color-provincia: #0891b2;
   --color-coffee: #e05305;
 }
 
@@ -100,17 +99,19 @@ body {
   transform: scale(1.02);
 }
 
-/* Griglia Giochi (Flexbox per centraggio dinamico delle righe) */
+/* Griglia Giochi */
 .games-grid {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: 24px;
   width: 100%;
 }
 
+.card-stato {
+  grid-column: 2;
+}
+
 .game-card {
-  width: calc((100% - 48px) / 3);
   background-color: var(--card-bg);
   border: 1px solid var(--border-color);
   border-radius: 22px;
@@ -202,9 +203,6 @@ body {
 .card-stato .card-icon { color: var(--color-stato); }
 .card-stato .play-btn { color: var(--color-stato); }
 
-.card-provincia .card-icon { color: var(--color-provincia); }
-.card-provincia .play-btn { color: var(--color-provincia); }
-
 /* Hover Card */
 .game-card:hover {
   transform: translateY(-6px);
@@ -254,7 +252,7 @@ body {
   background: var(--border-color);
 }
 
-/* Footer */
+/* Footer Aggiornato */
 .main-footer {
   text-align: center;
   color: var(--text-muted);
@@ -377,14 +375,24 @@ body {
 
 /* Responsive */
 @media (max-width: 900px) {
-  .game-card {
-    width: calc((100% - 24px) / 2);
+  .games-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .card-stato {
+    grid-column: span 2;
+    justify-self: center;
+    width: 100%;
+    max-width: 450px;
   }
 }
 
 @media (max-width: 600px) {
-  .game-card {
-    width: 100%;
+  .games-grid {
+    grid-template-columns: 1fr;
+  }
+  .card-stato {
+    grid-column: auto;
+    max-width: 100%;
   }
   .main-logo {
     max-width: 360px;
