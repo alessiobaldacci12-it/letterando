@@ -121,7 +121,7 @@
     <!-- Statistiche Visitatori -->
     <section class="stats-container">
       <div class="stat-box">
-        <span class="stat-number" id="stats-total">...</span>
+        <span class="stat-number" id="stats-total">3.001</span>
         <span class="stat-label">Giocatori Totali</span>
       </div>
     </section>
@@ -166,36 +166,24 @@
       if (e.target.id === 'coffeeModal') closeCoffeeModal();
     }
 
-    // Contatore Globale con Timeout Anti-Blocco per il Live Server
+    // Contatore Globale Reale e Stabile
     async function initGlobalPlayerStats() {
       const BASE_PLAYERS = 3000;
       const el = document.getElementById('stats-total');
-      let isUpdated = false;
-
-      // Se in locale l'API viene bloccata dal browser, forza il numero dopo 800ms
-      const fallbackTimer = setTimeout(() => {
-        if (!isUpdated) {
-          el.textContent = (BASE_PLAYERS + 1).toLocaleString('it-IT');
-        }
-      }, 800);
+      if (!el) return;
 
       try {
-        const response = await fetch('https://api.codetabs.com/v1/counter?key=letterando_hub_2026_visits');
-        if (response.ok) {
-          const totalVisits = await response.json();
-          const displayTotal = BASE_PLAYERS + parseInt(totalVisits || 1);
-          isUpdated = true;
-          clearTimeout(fallbackTimer);
-          el.textContent = displayTotal.toLocaleString('it-IT');
-          return;
+        const res = await fetch('https://api.counterapi.dev/v1/letterando_official_2026/visits/up');
+        if (res.ok) {
+          const data = await res.json();
+          if (data && data.count) {
+            const displayTotal = BASE_PLAYERS + parseInt(data.count);
+            el.textContent = displayTotal.toLocaleString('it-IT');
+          }
         }
       } catch (err) {
-        console.warn('API non raggiungibile, attivo fallback.');
+        console.warn('Utilizzo valore base per il contatore');
       }
-
-      isUpdated = true;
-      clearTimeout(fallbackTimer);
-      el.textContent = (BASE_PLAYERS + 1).toLocaleString('it-IT');
     }
 
     initGlobalPlayerStats();
