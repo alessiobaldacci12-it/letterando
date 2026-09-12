@@ -230,7 +230,6 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 36px;
   background: #ffffff;
   padding: 16px 40px;
   border-radius: 40px;
@@ -256,12 +255,6 @@ body {
   color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: 0.5px;
-}
-
-.stat-divider {
-  width: 1px;
-  height: 28px;
-  background: var(--border-color);
 }
 
 /* Footer Aggiornato */
