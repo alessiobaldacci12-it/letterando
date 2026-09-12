@@ -166,20 +166,27 @@
       if (e.target.id === 'coffeeModal') closeCoffeeModal();
     }
 
-    // Gestione Giocatori Totali (Base 3000 + incrementi reali per ogni accesso)
-    function initPlayerStats() {
+    // Contatore Reale Globale (Base 3000 + API CounterAPI)
+    async function initGlobalPlayerStats() {
       const BASE_PLAYERS = 3000;
       
-      let incrementalVisits = parseInt(localStorage.getItem('letterando_visit_count') || '0', 10);
-      incrementalVisits += 1;
-      
-      localStorage.setItem('letterando_visit_count', incrementalVisits.toString());
-      
-      const totalPlayers = BASE_PLAYERS + incrementalVisits;
-      document.getElementById('stats-total').textContent = totalPlayers.toLocaleString('it-IT');
+      try {
+        const response = await fetch('https://api.counterapi.dev/v1/letterando-main-site/giocatori/up');
+        if (response.ok) {
+          const data = await response.json();
+          const totalVisits = data.count || 1;
+          const displayTotal = BASE_PLAYERS + totalVisits;
+          document.getElementById('stats-total').textContent = displayTotal.toLocaleString('it-IT');
+          return;
+        }
+      } catch (err) {
+        console.error('Errore conteggio:', err);
+      }
+
+      document.getElementById('stats-total').textContent = (BASE_PLAYERS + 1).toLocaleString('it-IT');
     }
 
-    initPlayerStats();
+    initGlobalPlayerStats();
   </script>
 </body>
 </html>
