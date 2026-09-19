@@ -7,6 +7,7 @@
   --border-color: #ebdcd0;
   
   --color-unwordle: #059669;
+  --color-syllable: #d946ef;
   --color-pipipopo: #d97706;
   --color-parola: #7c3aed;
   --color-stato: #2563eb;
@@ -134,6 +135,13 @@ body {
   width: 100%;
 }
 
+/* Posizionamento centrato per la riga con elemento singolo in griglia da 3 */
+@media (min-width: 901px) {
+  .card-centered {
+    grid-column: 2;
+  }
+}
+
 .game-card {
   background-color: var(--card-bg);
   border: 1px solid var(--border-color);
@@ -218,6 +226,9 @@ body {
 .card-unwordle .card-icon { color: var(--color-unwordle); }
 .card-unwordle .play-btn { color: var(--color-unwordle); }
 
+.card-syllable .card-icon { color: var(--color-syllable); }
+.card-syllable .play-btn { color: var(--color-syllable); }
+
 .card-pipipopo .play-btn { color: var(--color-pipipopo); }
 
 .card-parola .card-icon { color: var(--color-parola); }
@@ -239,38 +250,6 @@ body {
 
 .game-card:hover .play-btn {
   gap: 10px;
-}
-
-/* Statistiche Visitatori */
-.stats-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #ffffff;
-  padding: 16px 40px;
-  border-radius: 40px;
-  border: 1px solid var(--border-color);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.04);
-}
-
-.stat-box {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.stat-number {
-  font-size: 1.45rem;
-  font-weight: 800;
-  color: var(--text-dark);
-}
-
-.stat-label {
-  font-size: 0.75rem;
-  font-weight: 700;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
 }
 
 /* Footer */

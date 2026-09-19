@@ -33,7 +33,7 @@
           <span>🔠</span> Giochi di Parole e Logica
         </h2>
         
-        <div class="games-grid">
+        <div class="games-grid grid-words">
           <!-- Card 1: UnWordle Ita -->
           <a href="https://alessiobaldacci12-it.github.io/unwordle-ita/" class="game-card card-unwordle" target="_blank" rel="noopener">
             <div class="card-banner">
@@ -55,7 +55,24 @@
             </div>
           </a>
 
-          <!-- Card 2: Pipi/Popo -->
+          <!-- Card 2: Syllable-ITA -->
+          <a href="https://alessiobaldacci12-it.github.io/syllable-ita/" class="game-card card-syllable" target="_blank" rel="noopener">
+            <div class="card-banner">
+              <div class="card-icon">
+                <svg viewBox="0 0 24 24" width="34" height="34" stroke="currentColor" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M4 7h16M4 12h16M4 17h10"></path>
+                </svg>
+              </div>
+              <span class="badge">SILLABE</span>
+            </div>
+            <div class="card-content">
+              <h2>Syllable-ITA</h2>
+              <p>Metti alla prova la tua abilità con le sillabe e la composizione delle parole.</p>
+              <span class="play-btn">Gioca ora &rarr;</span>
+            </div>
+          </a>
+
+          <!-- Card 3: Pipi/Popo -->
           <a href="https://alessiobaldacci12-it.github.io/pipi-popo-ita/" class="game-card card-pipipopo" target="_blank" rel="noopener">
             <div class="card-banner">
               <div class="card-icon poop-emoji">💩</div>
@@ -68,8 +85,8 @@
             </div>
           </a>
 
-          <!-- Card 3: La Parola Misteriosa -->
-          <a href="https://alessiobaldacci12-it.github.io/la-parola-misteriosa/" class="game-card card-parola" target="_blank" rel="noopener">
+          <!-- Card 4: La Parola Misteriosa (Centrata) -->
+          <a href="https://alessiobaldacci12-it.github.io/la-parola-misteriosa/" class="game-card card-parola card-centered" target="_blank" rel="noopener">
             <div class="card-banner">
               <div class="card-icon">
                 <svg viewBox="0 0 24 24" width="34" height="34" stroke="currentColor" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -96,7 +113,7 @@
         </h2>
 
         <div class="games-grid">
-          <!-- Card 4: Lo Stato Misterioso -->
+          <!-- Card 5: Lo Stato Misterioso -->
           <a href="https://alessiobaldacci12-it.github.io/lo-stato-misterioso/" class="game-card card-stato" target="_blank" rel="noopener">
             <div class="card-banner">
               <div class="card-icon">
@@ -115,7 +132,7 @@
             </div>
           </a>
 
-          <!-- Card 5: La Provincia Misteriosa -->
+          <!-- Card 6: La Provincia Misteriosa -->
           <a href="https://alessiobaldacci12-it.github.io/la-provincia-misteriosa/" class="game-card card-provincia" target="_blank" rel="noopener">
             <div class="card-banner">
               <div class="card-icon flag-emoji">🇮🇹</div>
@@ -128,7 +145,7 @@
             </div>
           </a>
 
-          <!-- Card 6: Indovina lo Stato -->
+          <!-- Card 7: Indovina lo Stato -->
           <a href="https://alessiobaldacci12-it.github.io/indovina-lo-stato/" class="game-card card-indovina-stato" target="_blank" rel="noopener">
             <div class="card-banner">
               <div class="card-icon">
@@ -149,14 +166,6 @@
       </section>
 
     </main>
-
-    <!-- Statistiche Visitatori -->
-    <section class="stats-container">
-      <div class="stat-box">
-        <span class="stat-number" id="stats-total">3.001</span>
-        <span class="stat-label">Giocatori Totali</span>
-      </div>
-    </section>
 
     <!-- Footer -->
     <footer class="main-footer">
@@ -197,32 +206,6 @@
     function closeCoffeeModalOutside(e) {
       if (e.target.id === 'coffeeModal') closeCoffeeModal();
     }
-
-    // Contatore Reale Globale
-    async function initGlobalPlayerStats() {
-      const BASE_PLAYERS = 3000;
-      const el = document.getElementById('stats-total');
-      if (!el) return;
-
-      try {
-        const response = await fetch('https://api.upcount.app/v1/hit/letterando_official_2026');
-        
-        if (response.ok) {
-          const data = await response.json();
-          if (data && typeof data.value === 'number') {
-            const displayTotal = BASE_PLAYERS + data.value;
-            el.textContent = displayTotal.toLocaleString('it-IT');
-            return;
-          }
-        }
-      } catch (err) {
-        console.warn('Errore di connessione al contatore remoto:', err);
-      }
-
-      el.textContent = (BASE_PLAYERS + 1).toLocaleString('it-IT');
-    }
-
-    initGlobalPlayerStats();
   </script>
 </body>
 </html>
